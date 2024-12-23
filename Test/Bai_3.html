@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        input {
+            padding: 5px 10px;
+        }
+
+        button {
+            padding: 5px 20px;
+        }
+    </style>
+</head>
+<body>
+<label for="monthYear">Nhập ngày tháng năm (MM/yyyy): </label>
+<input type="text" id="monthYear" placeholder="Nhập tháng năm"/>
+<button onclick="daysInMonth()">Tính số ngày</button>
+<div id="result"></div>
+<div id="error" style="color: red;"></div>
+<script>
+    function isLeapYear(year) {
+        if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) {
+            return true;
+        }
+        return false;
+    }
+
+    function isValidDateFormat(input) {
+        if (input.length !== 7) {
+            return false;
+        }
+        if (input.charAt(2) !== '/') {
+            return false;
+        }
+
+        let month = input.slice(0, 2);
+        let year = input.slice(3, 7);
+
+        if (isNaN(month) || isNaN(year)) {
+            return false;
+        } else if (parseInt(month) < 1 || parseInt(month) > 12) {
+            return false;
+        }
+
+        return true;
+    }
+
+    function daysInMonth() {
+        let input = document.getElementById("monthYear").value;
+        let errorDiv = document.getElementById("error");
+
+        errorDiv.innerHTML = '';
+
+        if (!isValidDateFormat(input)) {
+            errorDiv.innerHTML = "Định dạng nhập vào không hợp lệ! Vui lòng nhập theo định dạng MM/yyyy.";
+            return;
+        }
+
+        let month = parseInt(input.slice(0, 2), 10);
+        let year = parseInt(input.slice(3, 7), 10);
+
+        let days;
+        switch (month) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                days = 31;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                days = 30;
+                break;
+            case 2:
+                if (isLeapYear(year)) {
+                    days = 29;
+                } else {
+                    days = 28;
+                }
+                break;
+        }
+
+        document.getElementById("result").innerHTML = "Số ngày trong tháng " + month + "/" + year + " là: " + days + " ngày.";
+    }
+</script>
+</body>
+</html>

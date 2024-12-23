@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 2:</title>
+</head>
+<body>
+<div id="res"></div>
+<script>
+    function checkNumber(num) {
+        if (num <= 0) {
+            return false;
+        }
+
+        let sum = 0;
+        for (let i = 1; i <= num / 2; i++) {
+            if (num % i === 0) {
+                sum += i;
+            }
+        }
+
+        return sum === num;
+    }
+
+    let num = parseInt(prompt("Nhập số nguyên dương: "));
+    if (checkNumber(num)) {
+        document.getElementById("res").innerHTML = "True";
+    } else {
+        document.getElementById("res").innerHTML = "False";
+    }
+</script>
+</body>
+</html>
